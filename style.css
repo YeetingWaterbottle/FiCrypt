@@ -10,7 +10,7 @@
 body
 {
   min-height:100vh;
-  background:linear-gradient(#5d23ff,#1fbfd4)
+  background:linear-gradient(#150a33,#605ed4)
 }
 header
 {
@@ -60,6 +60,74 @@ header ul li a
 header ul li a:hover,
 header ul li a.active
 {
-    background : #ffffff;
+    background : #ffffff73;
     color: #2b1055;
+}
+
+button{
+  width:140px;
+  border:0;
+  padding:12px 10px;
+  outline: none;
+  color: #fff;
+  background: linear-gradient(to top, #1b2a6b, #9fb5d6);
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.col-1 h2{
+  font-size: 54px;
+  color:rgb(255, 255, 255);;
+}
+
+.col-1 h3{
+  font-size:30px;
+  color:#95c3f7;
+  font-weight: 100;
+  margin: 20px 0 10px;
+  padding-bottom:10px;
+}
+
+.row{
+  display:flex;
+  justify-content: space-around;
+  padding-top:12.5%;
+  padding-left:15%;
+}
+
+.color-box{
+  position:absolute;
+  right:0;
+}
+
+.col-2 .filecrypt{
+  width:50%;
+}
+
+/*
+Text Underline Animation Below
+*/
+
+.hover_anim {
+  display: inline-block;
+  position: relative;
+  color: #ffffff;
+}
+
+.hover_anim:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover_anim:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
