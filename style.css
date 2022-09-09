@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+*
+{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body
+{
+  min-height:100vh;
+  background:linear-gradient(#5d23ff,#1fbfd4)
+}
+header
+{
+  top:0;
+  left:0;
+  width:100%;
+  padding: 30px 100px;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+header .logo
+{
+  font-weight: 700;
+  font-size:2em;
+  text-decoration:none;
+  color:#ffffff;
+  Letter-spacing:2px;
+}
+
+header ul
+{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/*
+This is for list specific padding to the text
+*/
+
+header ul li 
+{
+  list-style:none;
+  margin-left:20px;
+}
+
+header ul li a
+{
+    text-decoration: none;
+    padding: 6px 15px;
+    color: rgb(255, 255, 255);
+    border-radius:20px;
+}
+
+header ul li a:hover,
+header ul li a.active
+{
+    background : #ffffff;
+    color: #2b1055;
+}
