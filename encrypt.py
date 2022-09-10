@@ -1,5 +1,8 @@
-from math import sqrt, floor, ceil
+import time
+start_time = time.time()
 
+
+from math import sqrt, floor, ceil
 
 def get_list_width(byte_list_length, divide):
     if floor(sqrt(byte_list_length)) % 2 == 0:
@@ -9,12 +12,21 @@ def get_list_width(byte_list_length, divide):
         return int(ceil(sqrt(byte_list_length)) / divide)
 
 
-def str_to_byte(input_str):
+def str_to_byte(input, type):
     result = []
-    for i in bytearray(input_str, encoding='utf-8'):
-        result.append(format(i, '08b'))
+    if type == "string":
+        for i in bytearray(input, encoding="utf8"):
+            result.append(format(i, '08b'))
 
-    return result
+        return result
+
+    elif type == "binary":
+        for i in bytearray(input):
+            result.append(format(i, '08b'))
+        
+        return result
+
+    return -1
 
 
 def set_array_width(byte_list, byte_list_length, list_width):
@@ -33,12 +45,27 @@ def check_add_padding(byte_list, list_width):
 
 
 def split_bytes(byte_list):
-    foo = ""
-    for byte in byte_list:
-        half = len(byte) // 2
-        foo += f"{byte[:half]} {byte[half:]} "
-        
-    return foo.strip().split(" ")
+    result = []
+    for row in byte_list:
+        foo = ""
+        for byte in row:
+            half = len(byte) // 2
+            foo += f"{byte[:half]} {byte[half:]} "
+        result.append(foo.strip().split(" "))
+
+    return result
+
+
+def combine_bytes(byte_list, count):
+    result = []
+    for row in byte_list:
+        foo = ""
+        for byte in range(0, len(row), count):
+            foo += "".join(row[byte:byte+count]) + " "
+        result.append(foo.strip().split(" "))
+
+    return result
+
 
 def reverse_bytes(byte_list, direction):
     if direction == "horizontal":
@@ -53,13 +80,26 @@ def reverse_bytes(byte_list, direction):
 
     return -1
 
+def save_encrypted(byte_list, file_name):
+    result = bytearray()
+    for row in byte_list:
+        for byte in row:
+            result.append(int(byte, 2))
+
+    with open(file_name, "wb") as file:
+        file.write(result)
+
+    return result
+
+# with open("your_face_up_my_meat_jeremy.mp3", "rb") as file:
+#     input_str = file.read()
 # input_str = input("good luck: ")
 input_str = "take the total of the binaries and then square root it and minus one."
 input_len = len(input_str)
-input_bin = str_to_byte(input_str)
+input_bin = str_to_byte(input_str, "string")
 result = []
 
-splitted_result = []
+
 
 width_segment = get_list_width(input_len, 2)
 
@@ -67,18 +107,14 @@ result = set_array_width(input_bin, input_len, width_segment)
 
 result = check_add_padding(result, width_segment)
 
+result = split_bytes(result)
 
-for i in result:
-    splitted_result.append(split_bytes(i))
+reverse_result = reverse_bytes(result, "horizontal")
 
-# for i in splitted_result:
-#     print(i)
-print(splitted_result[0])
+reverse_result = combine_bytes(reverse_result, 2)
 
-reverse_result = reverse_bytes(splitted_result, "verticle")
-print("-"*64)
+print(reverse_result)
 
-print(reverse_result[-1])
-print(len(reverse_result))
-# for i in reverse_result:
-#     print(i)
+save_encrypted(reverse_result, "hello.txt")
+
+print(f"--- {time.time() - start_time} seconds ---")
