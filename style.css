@@ -15,7 +15,6 @@ INDEX CSS
 body
 {
   min-height:100vh;
-  background-image: linear-gradient(#150a33b6,#605ed4a1),url(images/SkyBackground.png);
 }
 header
 {
@@ -57,52 +56,49 @@ header ul li a
     border-radius:20px;
 }
 
-header ul li a:hover,
-header ul li a.active
+header ul li a:hover
 {
     background : #ffffff73;
     color: #2b1055;
 }
 
-button{
+.indexText a{
   width:140px;
   border:0;
   padding:12px 10px;
   outline: none;
   color: #fff;
-  background: linear-gradient(to top, #1b2a6b, #9fb5d6);
+  background: linear-gradient(to top, #5372f8, #5a90e0);
   border-radius:6px;
   cursor:pointer;
+  z-index: 2;
 }
 
-.col-1 h2{
+.indexText h2{
   font-size: 54px;
   color:rgb(255, 255, 255);
   letter-spacing: 2px;
 }
 
-.col-1 h3{
+.indexText h3{
   font-size:30px;
   color:#95c3f7;
   font-weight: 100;
-  margin: 20px 0 10px;
-  padding-bottom:10px;
+  margin: 20px 0 10px 10px;
+  padding-bottom:20px;
   letter-spacing: 5px;
 }
 
-.row{
+.indexClass{
   display:flex;
   justify-content: center;
   padding-top:10%;
+
+  border-left:20px;
+  border-right:20px;
 }
 
-.color-box{
-  position:absolute;
-  right:0;
-}
-
-
-.col-2 .filecrypt{
+.indexImage .filecrypt{
   width:300px;
   padding:30px 30px 30px 30px;
 }
@@ -133,6 +129,36 @@ Text Underline Animation Below
 .hover_anim:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.video-container{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 130%; 
+  overflow: hidden;
+  z-index: -1;
+}
+
+.video-container .indexVideo{
+  /* Make video to at least 100% wide and tall */
+  min-width: 100%; 
+  min-height: 130%; 
+
+  /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+  width: auto;
+  height: auto;
+
+  /* Center the video */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+
+  filter: brightness(35%);
+
+  z-index: -2;
 }
 
 /*
@@ -216,11 +242,77 @@ Inspirations CSS
 }
 
 /*
+excryptPage
+*/
+
+.encryptContainer{
+  background-image: linear-gradient(#150a33b6,#605ed4a1),url(images/SkyBackground.png);
+}
+
+.eText{
+  font-size: 20px;
+  color:rgb(255, 255, 255);
+  letter-spacing: 2px;
+  font-weight:50;
+  display:flex;
+  justify-content:center;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+.eButtons{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+}
+
+.eButtons button{
+  font-size:20px;
+  color:rgb(0, 0, 0);
+  letter-spacing:5px;
+  border-radius:5px;
+  border-color:#2a105500;
+  background-color:#5372f8;
+  color:rgb(218, 255, 241);
+  padding: 10px 10px 10px 10px;
+  margin: 25px 25px 25px 25px;
+  z-index:3;
+  cursor:pointer;
+}
+
+.dropContainer{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+}
+
+.dropContainer div{
+  height: 400px;
+  width: 400px;
+  border: 1px dashed #53d2f8;
+  color: #b4c2ff;
+
+ display:flex;
+  justify-content:center;
+  align-items: center;
+}
+
+.hover{
+  color:#fff;
+  border: 1px dashed white;
+}
+
+.valid{
+  background-color: green;
+  border: 1px solid green;
+}
+
+/*
 Transition between web pages
 */
 
 
-.container{ /* Main Page Transition */
+.indexClass{ /* Main Page Transition */
   animation: transitionIn 0.75s
 }
 
@@ -229,6 +321,14 @@ Transition between web pages
 }
 
 .inspirationsClass{ /* Inspiration Page Transition */
+  animation: transitionIn 0.75s
+}
+
+.eText{ /* Encryption Page */
+  animation: transitionIn 0.75s
+}
+
+.eButtons{ /* Encryption Page */
   animation: transitionIn 0.75s
 }
 
