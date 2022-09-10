@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+/*
+INDEX CSS
+*/
+
 *
 {
   margin:0;
@@ -10,26 +15,21 @@
 body
 {
   min-height:100vh;
-  background:linear-gradient(#150a33,#605ed4)
+  background-image: linear-gradient(#150a33b6,#605ed4a1),url(images/SkyBackground.png);
 }
 header
 {
   top:0;
   left:0;
   width:100%;
-  padding: 30px 100px;
+  padding: 50px 50px;
   display:flex;
   justify-content: space-between;
   align-items:center;
 }
 
-header .logo
-{
-  font-weight: 700;
-  font-size:2em;
-  text-decoration:none;
-  color:#ffffff;
-  Letter-spacing:2px;
+header .filecrypt{
+  width:50px;
 }
 
 header ul
@@ -77,7 +77,8 @@ button{
 
 .col-1 h2{
   font-size: 54px;
-  color:rgb(255, 255, 255);;
+  color:rgb(255, 255, 255);
+  letter-spacing: 2px;
 }
 
 .col-1 h3{
@@ -86,13 +87,13 @@ button{
   font-weight: 100;
   margin: 20px 0 10px;
   padding-bottom:10px;
+  letter-spacing: 5px;
 }
 
 .row{
   display:flex;
-  justify-content: space-around;
-  padding-top:12.5%;
-  padding-left:15%;
+  justify-content: center;
+  padding-top:10%;
 }
 
 .color-box{
@@ -100,8 +101,10 @@ button{
   right:0;
 }
 
+
 .col-2 .filecrypt{
-  width:50%;
+  width:300px;
+  padding:30px 30px 30px 30px;
 }
 
 /*
@@ -130,4 +133,114 @@ Text Underline Animation Below
 .hover_anim:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+/*
+About CSS
+*/
+
+
+.aboutClass h2{
+  font-size: 54px;
+  color:rgb(255, 255, 255);
+  letter-spacing: 2px;
+  font-weight:500;
+  display:flex;
+  justify-content:center;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+.aboutClass h3{
+  font-size: 15px;
+  color:rgb(255, 255, 255);
+  letter-spacing: 2px;
+  font-weight:50;
+  text-align: center;
+  display:flex;
+  justify-content:center;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+.aboutClass .cslogo{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+.aboutLogo{
+  display:flex;
+  justify-content: space-around;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+/*
+Inspirations CSS
+*/
+
+.inspirationsClass h2{
+  font-size: 54px;
+  color:rgb(255, 255, 255);
+  letter-spacing: 2px;
+  font-weight:1000;
+  display:flex;
+  justify-content:center;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+.inspirationsClass h3{
+  font-size: 30Spx;
+  color:rgb(255, 255, 255);
+  letter-spacing: 2px;
+  font-weight:50;
+  text-align: center;
+  display:flex;
+  justify-content:center;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+.inspirationsClass .lockfile{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+/*
+Transition between web pages
+*/
+
+
+.container{ /* Main Page Transition */
+  animation: transitionIn 0.75s
+}
+
+.aboutClass{ /* About Page Transition */
+  animation: transitionIn 0.75s
+}
+
+.inspirationsClass{ /* Inspiration Page Transition */
+  animation: transitionIn 0.75s
+}
+
+
+@keyframes transitionIn {
+  from{
+    opacity:0;
+    transform: rotateX(-10deg);
+  }
+
+  to {
+    opacity:1;
+    transform:rotateX(0);
+  }
 }
