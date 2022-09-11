@@ -1,32 +1,32 @@
-import time
-start_time = time.time()
-
-
 from math import sqrt, floor, ceil
+import time
+
 
 def get_list_width(byte_list_length, divide):
-    if floor(sqrt(byte_list_length)) % 2 == 0:
-        return int(floor(sqrt(byte_list_length)) / divide)
+    if floor(sqrt(byte_list_length) / divide) % 2 == 0:
+        return floor(sqrt(byte_list_length) / divide)
 
-    elif ceil(sqrt(byte_list_length)) % 2 == 0:
-        return int(ceil(sqrt(byte_list_length)) / divide)
+    elif ceil(sqrt(byte_list_length) / divide) % 2 == 0:
+        return ceil(sqrt(byte_list_length) / divide)
+
+    return -1
 
 
-def str_to_byte(input, type):
+def str_to_byte(input, type, file_name=""):
     result = []
     if type == "string":
         for i in bytearray(input, encoding="utf8"):
             result.append(format(i, '08b'))
 
-        return result
-
     elif type == "binary":
         for i in bytearray(input):
             result.append(format(i, '08b'))
-        
-        return result
 
-    return -1
+    if file_name != "":
+        result.extend(["00000000"]*8)
+        result.extend(str_to_byte(file_name, 'string'))
+
+    return result
 
 
 def set_array_width(byte_list, byte_list_length, list_width):
@@ -37,11 +37,16 @@ def set_array_width(byte_list, byte_list_length, list_width):
     return result
 
 
-def check_add_padding(byte_list, list_width):
+def check_add_padding(byte_list, list_width,):
     if len(byte_list[-1]) != list_width:
         byte_list[-1] += (list_width - len(byte_list[-1])) * ["00000000"]
 
     return byte_list
+
+
+def add_filename_data(str_bytes, file_name):
+    print("".join(str_to_byte(file_name, "string")))
+    return f"{str_bytes}{'00000000' * 8}{''.join(str_to_byte(file_name, 'string'))}"
 
 
 def split_bytes(byte_list):
@@ -72,7 +77,6 @@ def reverse_bytes(byte_list, direction):
         result = []
         for row in byte_list:
             result.append(row[::-1])
-
         return result
 
     elif direction == "verticle":
@@ -80,26 +84,143 @@ def reverse_bytes(byte_list, direction):
 
     return -1
 
-def save_encrypted(byte_list, file_name):
+
+def mirror_bytes(byte_list):
+    result = []
+    for row in byte_list:
+        foo = ""
+        for byte in row:
+            foo += f"{byte.translate(str.maketrans('01','10'))} "
+
+        result.append(foo.strip().split(" "))
+
+    return result
+
+
+def encrypt_bytes(byte_list, password):
+    password = str_to_byte(password, "string")
+    password = split_bytes([password])[0]
+    print(password)
+
+    for byte in password:
+        if byte[0]:
+            byte_list = reverse_bytes(byte_list, "horizontal")
+            print("Reverse Bytes Horizontally")
+        if byte[1]:
+            byte_list = reverse_bytes(byte_list, "verticle")
+            print("Reverse Bytes Vertically")
+        # if byte[2]:
+        #     byte_list = intersect_bytes(byte_list, "horizontal")
+        #     # print("Intersect Bytes Horizontal")
+        if byte[3]:
+            byte_list = mirror_bytes(byte_list)
+            print("Mirror Bytes")
+
+    return byte_list
+
+
+def decrypt_bytes(byte_list, password):
+    password = str_to_byte(password, "string")
+    password = split_bytes([password])[0]
+    print(password[::-1])
+
+    for byte in password[::-1]:
+        if byte[0]:
+            byte_list = reverse_bytes(byte_list, "horizontal")
+            print("Reverse Bytes Horizontally")
+        if byte[1]:
+            byte_list = reverse_bytes(byte_list, "verticle")
+            print("Reverse Bytes Vertically")
+        # if byte[2]:
+        #     byte_list = intersect_bytes(byte_list, "horizontal")
+        #     # print("Intersect Bytes Horizontal")
+        if byte[3]:
+            byte_list = mirror_bytes(byte_list)
+            print("Mirror Bytes")
+
+    return byte_list
+
+
+def save_bytes(byte_list, action, file_name=""):
+    foo = []
     result = bytearray()
+
     for row in byte_list:
         for byte in row:
+            foo.append(byte)
+
+    # print(foo)
+
+    if action == "de":
+        file_name = ""
+        reading_name = False
+        match = 0
+        counter = 0
+
+        for byte in foo[::-1]:
+            counter += 1
+            # print("RUN")
+
+            if byte != "00000000":
+                reading_name = True
+                # print("YES")
+                match = 0
+                file_name += chr(int(byte, 2))
+
+
+            if byte == "00000000" and reading_name == True:
+                # print("file sep")
+                match += 1
+
+            if match >= 8 and reading_name == True:
+                # print("stopping for loop")
+                break
+        
+        file_name = file_name[::-1]
+
+    if action == "en":
+        for byte in foo:
             result.append(int(byte, 2))
+
+    if action == "de":
+        for byte in foo[:-counter]:
+            result.append(int(byte, 2))
+
+    # print(result)
 
     with open(file_name, "wb") as file:
         file.write(result)
 
     return result
 
-# with open("your_face_up_my_meat_jeremy.mp3", "rb") as file:
-#     input_str = file.read()
-# input_str = input("good luck: ")
-input_str = "take the total of the binaries and then square root it and minus one."
-input_len = len(input_str)
-input_bin = str_to_byte(input_str, "string")
+
+def print_bytes(byte_list):
+    for row in byte_list:
+        print(row)
+
+
+action = "en"
+password = "Hello Friends"
+
+if action == "en":
+    file_name = "images/SkyBackground.png"
+
+elif action == "de":
+    file_name = "encrypted.enc"
+
+
+with open(file_name, "rb") as file:
+    input_str = file.read()
+
+if action == "en":
+    input_bin = str_to_byte(input_str, "binary", file_name)
+
+elif action == "de":
+    input_bin = str_to_byte(input_str, "binary")
+
+
+input_len = len(input_bin)
 result = []
-
-
 
 width_segment = get_list_width(input_len, 2)
 
@@ -107,14 +228,36 @@ result = set_array_width(input_bin, input_len, width_segment)
 
 result = check_add_padding(result, width_segment)
 
+# print("Original Input Binary")
+# print_bytes(result)
+
 result = split_bytes(result)
 
-reverse_result = reverse_bytes(result, "horizontal")
+# password = input("Input Password: ")
+start_time = time.time()
+# print("Password Set to: " + password)
 
-reverse_result = combine_bytes(reverse_result, 2)
 
-print(reverse_result)
+if action == "en":
+    result = encrypt_bytes(result, password)
 
-save_encrypted(reverse_result, "hello.txt")
+elif action == "de":
+    result = decrypt_bytes(result, password)
 
-print(f"--- {time.time() - start_time} seconds ---")
+
+print("Combined Back to 8-bit Bytes")
+result = combine_bytes(result, 2)
+# print(result)
+
+# print_bytes(result)
+
+
+if action == "en":
+    save_bytes(result, action, "encrypted.enc")
+elif action == "de":
+    save_bytes(result, action)
+
+print("Encrypted Saved!")
+
+
+print(f"--- Program Ran In {time.time() - start_time} Seconds ---")
