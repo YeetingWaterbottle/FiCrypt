@@ -45,7 +45,6 @@ def check_add_padding(byte_list, list_width,):
 
 
 def add_filename_data(str_bytes, file_name):
-    print("".join(str_to_byte(file_name, "string")))
     return f"{str_bytes}{'00000000' * 8}{''.join(str_to_byte(file_name, 'string'))}"
 
 
@@ -100,21 +99,20 @@ def mirror_bytes(byte_list):
 def encrypt_bytes(byte_list, password):
     password = str_to_byte(password, "string")
     password = split_bytes([password])[0]
-    print(password)
 
     for byte in password:
         if byte[0]:
             byte_list = reverse_bytes(byte_list, "horizontal")
-            print("Reverse Bytes Horizontally")
+            # print("Reverse Bytes Horizontally")
         if byte[1]:
             byte_list = reverse_bytes(byte_list, "verticle")
-            print("Reverse Bytes Vertically")
+            # print("Reverse Bytes Vertically")
         # if byte[2]:
         #     byte_list = intersect_bytes(byte_list, "horizontal")
         #     # print("Intersect Bytes Horizontal")
         if byte[3]:
             byte_list = mirror_bytes(byte_list)
-            print("Mirror Bytes")
+            # print("Mirror Bytes")
 
     return byte_list
 
@@ -127,16 +125,16 @@ def decrypt_bytes(byte_list, password):
     for byte in password[::-1]:
         if byte[0]:
             byte_list = reverse_bytes(byte_list, "horizontal")
-            print("Reverse Bytes Horizontally")
+            # print("Reverse Bytes Horizontally")
         if byte[1]:
             byte_list = reverse_bytes(byte_list, "verticle")
-            print("Reverse Bytes Vertically")
+            # print("Reverse Bytes Vertically")
         # if byte[2]:
         #     byte_list = intersect_bytes(byte_list, "horizontal")
         #     # print("Intersect Bytes Horizontal")
         if byte[3]:
             byte_list = mirror_bytes(byte_list)
-            print("Mirror Bytes")
+            # print("Mirror Bytes")
 
     return byte_list
 
@@ -159,21 +157,17 @@ def save_bytes(byte_list, action, file_name=""):
 
         for byte in foo[::-1]:
             counter += 1
-            # print("RUN")
 
             if byte != "00000000":
                 reading_name = True
-                # print("YES")
                 match = 0
                 file_name += chr(int(byte, 2))
 
 
             if byte == "00000000" and reading_name == True:
-                # print("file sep")
                 match += 1
 
             if match >= 8 and reading_name == True:
-                # print("stopping for loop")
                 break
         
         file_name = file_name[::-1]
@@ -185,8 +179,6 @@ def save_bytes(byte_list, action, file_name=""):
     if action == "de":
         for byte in foo[:-counter]:
             result.append(int(byte, 2))
-
-    # print(result)
 
     with open(file_name, "wb") as file:
         file.write(result)
@@ -203,7 +195,7 @@ action = "en"
 password = "Hello Friends"
 
 if action == "en":
-    file_name = "images/SkyBackground.png"
+    file_name = "main.js"
 
 elif action == "de":
     file_name = "encrypted.enc"
@@ -245,7 +237,7 @@ elif action == "de":
     result = decrypt_bytes(result, password)
 
 
-print("Combined Back to 8-bit Bytes")
+# print("Combined Back to 8-bit Bytes")
 result = combine_bytes(result, 2)
 # print(result)
 
@@ -257,7 +249,7 @@ if action == "en":
 elif action == "de":
     save_bytes(result, action)
 
-print("Encrypted Saved!")
+# print("Encrypted Saved!")
 
 
 print(f"--- Program Ran In {time.time() - start_time} Seconds ---")
