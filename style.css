@@ -72,6 +72,7 @@ header ul li a:hover
   border-radius:6px;
   cursor:pointer;
   z-index: 2;
+  text-decoration:none;
 }
 
 .indexText h2{
@@ -232,13 +233,11 @@ Inspirations CSS
   padding-right:20px;
 }
 
-.inspirationsClass .lockfile{
+.inspirationsClass img{
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 250px;
-  padding-top:20px;
-  padding-bottom:20px;
 }
 
 /*
@@ -246,7 +245,7 @@ excryptPage
 */
 
 .encryptContainer{
-  background-image: linear-gradient(#150a33b6,#605ed4a1),url(images/SkyBackground.png);
+  background-image: linear-gradient(#150a33b6,#605ed4a1),url(images/Website\ BG\ Encryption.png);
 }
 
 .eText{
@@ -280,32 +279,99 @@ excryptPage
   cursor:pointer;
 }
 
-.dropContainer{
-  display:flex;
-  justify-content:center;
+.drop-zone {
+  max-width: 300px;
+  height: 300px;
+  padding: 25px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  color: #cccccc;
+  border: 4px dashed #a166ff;
+  border-radius: 10px;
+
+  margin-top:5%;
+  margin-left:auto;
+  margin-right:auto;
 }
 
-.dropContainer div{
-  height: 400px;
-  width: 400px;
-  border: 1px dashed #53d2f8;
-  color: #b4c2ff;
-
- display:flex;
-  justify-content:center;
+.output_zone{
+  max-width: 400px;
+  height: 150px;
+  padding: 25px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #cccccc;
+  border: 4px dashed #a8cfff;
+  border-radius: 10px;
+
+  margin-top:5%;
+  margin-left:auto;
+  margin-right:auto;
 }
 
-.hover{
-  color:#fff;
-  border: 1px dashed white;
+.output_zone h3{
+  font-size:10px;
+  color:#e5f1ff;
+  font-weight: 100;
+  margin: 20px 0 10px 10px;
+  padding-bottom:20px;
+  letter-spacing: 5px;
 }
 
-.valid{
-  background-color: green;
-  border: 1px solid green;
+.drop-zone--over {
+  border-style: solid;
 }
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+
+.popup-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5000;
+  visibility: hidden;
+}
+
 
 /*
 Transition between web pages
@@ -324,12 +390,8 @@ Transition between web pages
   animation: transitionIn 0.75s
 }
 
-.eText{ /* Encryption Page */
-  animation: transitionIn 0.75s
-}
-
-.eButtons{ /* Encryption Page */
-  animation: transitionIn 0.75s
+.funcContainer{ /* Encryption Page */
+  animation: slowTransition 1.25s
 }
 
 
@@ -337,6 +399,18 @@ Transition between web pages
   from{
     opacity:0;
     transform: rotateX(-10deg);
+  }
+
+  to {
+    opacity:1;
+    transform:rotateX(0);
+  }
+}
+
+@keyframes slowTransition {
+  from{
+    opacity:0;
+    transform: rotateX(-30deg);
   }
 
   to {
