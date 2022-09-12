@@ -1,3 +1,8 @@
+action = "en"
+password = "hello people"
+file_name = "style.css"
+
+
 from math import sqrt, floor, ceil
 import time
 
@@ -97,22 +102,25 @@ def mirror_bytes(byte_list):
 
 
 def encrypt_bytes(byte_list, password):
+    
     password = str_to_byte(password, "string")
     password = split_bytes([password])[0]
 
+    print(password)
+
     for byte in password:
-        if byte[0]:
-            byte_list = reverse_bytes(byte_list, "horizontal")
-            # print("Reverse Bytes Horizontally")
-        if byte[1]:
-            byte_list = reverse_bytes(byte_list, "verticle")
-            # print("Reverse Bytes Vertically")
-        # if byte[2]:
-        #     byte_list = intersect_bytes(byte_list, "horizontal")
-        #     # print("Intersect Bytes Horizontal")
-        if byte[3]:
+        if byte[0] == "1":
             byte_list = mirror_bytes(byte_list)
-            # print("Mirror Bytes")
+            print("Mirror Bytes")
+        if byte[1] == "1":
+            byte_list = reverse_bytes(byte_list, "horizontal")
+            print("Reverse Bytes Horizontally")
+        if byte[2] == "1":
+            byte_list = reverse_bytes(byte_list, "verticle")
+            print("Reverse Bytes Vertically")
+        # if byte[3] == "1":
+        #     byte_list = mirror_bytes(byte_list)
+        #     print("Mirror Bytes")
 
     return byte_list
 
@@ -120,22 +128,20 @@ def encrypt_bytes(byte_list, password):
 def decrypt_bytes(byte_list, password):
     password = str_to_byte(password, "string")
     password = split_bytes([password])[0]
-    print(password[::-1])
 
     for byte in password[::-1]:
-        if byte[0]:
-            byte_list = reverse_bytes(byte_list, "horizontal")
-            # print("Reverse Bytes Horizontally")
-        if byte[1]:
-            byte_list = reverse_bytes(byte_list, "verticle")
-            # print("Reverse Bytes Vertically")
-        # if byte[2]:
-        #     byte_list = intersect_bytes(byte_list, "horizontal")
-        #     # print("Intersect Bytes Horizontal")
-        if byte[3]:
+        if byte[0] == "1":
             byte_list = mirror_bytes(byte_list)
-            # print("Mirror Bytes")
-
+            print("Mirror Bytes")
+        if byte[1] == "1":
+            byte_list = reverse_bytes(byte_list, "horizontal")
+            print("Reverse Bytes Horizontally")
+        if byte[2] == "1":
+            byte_list = reverse_bytes(byte_list, "verticle")
+            print("Reverse Bytes Vertically")
+        # if byte[3] == "1":
+        #     byte_list = mirror_bytes(byte_list)
+        #     print("Mirror Bytes")
     return byte_list
 
 
@@ -191,11 +197,8 @@ def print_bytes(byte_list):
         print(row)
 
 
-action = "en"
-password = "Hello Friends"
-
 if action == "en":
-    file_name = "main.js"
+    file_name = file_name
 
 elif action == "de":
     file_name = "encrypted.enc"
@@ -207,7 +210,7 @@ with open(file_name, "rb") as file:
 if action == "en":
     input_bin = str_to_byte(input_str, "binary", file_name)
 
-elif action == "de":
+if action == "de":
     input_bin = str_to_byte(input_str, "binary")
 
 
@@ -219,6 +222,7 @@ width_segment = get_list_width(input_len, 2)
 result = set_array_width(input_bin, input_len, width_segment)
 
 result = check_add_padding(result, width_segment)
+
 
 # print("Original Input Binary")
 # print_bytes(result)
@@ -233,7 +237,7 @@ start_time = time.time()
 if action == "en":
     result = encrypt_bytes(result, password)
 
-elif action == "de":
+if action == "de":
     result = decrypt_bytes(result, password)
 
 
@@ -246,7 +250,7 @@ result = combine_bytes(result, 2)
 
 if action == "en":
     save_bytes(result, action, "encrypted.enc")
-elif action == "de":
+if action == "de":
     save_bytes(result, action)
 
 # print("Encrypted Saved!")
