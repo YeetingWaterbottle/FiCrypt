@@ -1,8 +1,9 @@
+from tqdm import tqdm
 import time
 from math import sqrt, floor, ceil
 action = "de"
-password = "hello this is a long password"
-file_name = "style.css"
+password = "Strong Pass234"
+file_name = "your_face_up_my_meat_jeremy.mp3"
 
 
 def get_list_width(byte_list_length, divide):
@@ -98,11 +99,11 @@ def reverse_bytes(byte_list, direction, index=0):
 def mirror_bytes(byte_list):
     result = []
     for row in byte_list:
-        foo = ""
-        for byte in row:
-            foo += f"{byte.translate(str.maketrans('01','10'))} "
+        foo = " ".join(row)
 
-        result.append(foo.strip().split(" "))
+        foo = foo.translate(str.maketrans('01', '10'))
+
+        result.append(foo.split(" "))
 
     return result
 
@@ -110,7 +111,9 @@ def mirror_bytes(byte_list):
 def encrypt_bytes(byte_list, password):
     password = str_to_byte(password, "string")
     password = split_bytes([password])[0]
-    for byte in password:
+
+    # for byte in password:
+    for byte in tqdm(password):
         if byte[0] == "1":
             byte_list = mirror_bytes(byte_list)
             # print("Mirror Bytes")
@@ -125,7 +128,7 @@ def encrypt_bytes(byte_list, password):
                 byte_list = reverse_bytes(
                     byte_list, "horizontal", len(byte_list[0]) // 2)
                 # print("Reverse Bytes Half Horizontally")
-            elif byte[2] == "1":
+            if byte[2] == "1":
                 byte_list = reverse_bytes(
                     byte_list, "verticle", len(byte_list) // 2)
                 # print("Reverse Bytes Half Vertically")
@@ -136,25 +139,30 @@ def decrypt_bytes(byte_list, password):
     password = str_to_byte(password, "string")
     password = split_bytes([password])[0]
 
-    for byte in password[::-1]:
-        if byte[0] == "1":
-            byte_list = mirror_bytes(byte_list)
-            # print("Mirror Bytes")
-        if byte[1] == "1":
-            byte_list = reverse_bytes(byte_list, "horizontal")
-            # print("Reverse Bytes Horizontally")
-        if byte[2] == "1":
-            byte_list = reverse_bytes(byte_list, "verticle")
-            # print("Reverse Bytes Vertically")
+    # for byte in password[::-1]:
+    for byte in tqdm(password[::-1]):
         if byte[3] == "1":
+            if byte[2] == "1":
+                byte_list = reverse_bytes(
+                    byte_list, "verticle", len(byte_list) // 2)
+                # print("Reverse Bytes Half Vertically")
             if byte[1] == "1":
                 byte_list = reverse_bytes(
                     byte_list, "horizontal", len(byte_list[0]) // 2)
                 # print("Reverse Bytes Half Horizontally")
-            elif byte[2] == "1":
-                byte_list = reverse_bytes(
-                    byte_list, "verticle", len(byte_list) // 2)
-                # print("Reverse Bytes Half Vertically")
+
+        if byte[2] == "1":
+            byte_list = reverse_bytes(byte_list, "verticle")
+            # print("Reverse Bytes Vertically")
+
+        if byte[1] == "1":
+            byte_list = reverse_bytes(byte_list, "horizontal")
+            # print("Reverse Bytes Horizontally")
+
+        if byte[0] == "1":
+            byte_list = mirror_bytes(byte_list)
+            # print("Mirror Bytes")
+
     return byte_list
 
 
@@ -198,6 +206,8 @@ def save_bytes(byte_list, action, file_name=""):
 
     with open(file_name, "wb") as file:
         file.write(result)
+
+    print(f"Output File Name: {file_name}")
 
     return result
 
