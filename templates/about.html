@@ -5,27 +5,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>FiCrypt: File Safety made Easy</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="{{url_for('static', filename='style/style.css')}}" rel="stylesheet" type="text/css" />
 </head>
 
-<body class = "container">
+<body class="container">
 
-  <div class = "video-container">
-    <video autoplay loop muted plays-inline class = "indexVideo">
-      <source src="videos/About Video.mp4" type=""video/mp4">
+  <div class="video-container">
+    <video autoplay loop muted plays-inline class="indexVideo">
+      <source src="{{url_for('static', filename='videos/About_Video.mp4')}}" type="video/mp4">
     </video>
   </div>
-  
+
   <header>
-    <a href="index.html"><img src="images/FiCrypt Logo.png" alt="HTML tutorial" class="filecrypt"></a>
+    <a href="{{url_for('home_page')}}"><img src="{{url_for('static', filename='images/FiCrypt_Logo.png')}}" class="filecrypt"></a>
     <ul>
-      <li><a href="index.html" class = "hover_anim">Main</a></li>
-      <li><a href="#" class = "hover_anim">About</a></li>
-      <li><a href="inspirations.html" class = "hover_anim">Inspirations</a></li>
+      <li><a href="{{url_for('home_page')}}" class="hover_anim">Main</a></li>
+      <li><a href="#" class="hover_anim">About</a></li>
+      <li><a href="{{url_for('inspirations_page')}}" class="hover_anim">Inspirations</a></li>
     </ul>
   </header>
-  
-  <div class = "aboutClass">
+
+  <div class="aboutClass">
     <h2>ABOUT THE APP</h2>
     <h3>
       <br>
@@ -46,16 +46,15 @@
       <br>
     </h3>
 
-    <img src ="images/igniteCSLogo.png" class="cslogo"></img>
-    
+    <img src="{{url_for('static', filename='images/igniteCS_Logo.png')}}" class="cslogo"></img>
 
-    <div class = "aboutLogo">
-      <img src ="images/About_Page_Logo.png" class="cslogo"></img>
+
+    <div class="aboutLogo">
+      <img src="{{url_for('static', filename='images/About_Page_Logo.png')}}" class="cslogo"></img>
     </div>
-    
 
   </div>
-  
+
 </body>
 
 </html>
