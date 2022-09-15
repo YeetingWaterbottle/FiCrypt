@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width">
   <title>FiCrypt: File Safety made Easy</title>
   <link href="{{url_for('static', filename='style/style.css')}}" rel="stylesheet" type="text/css" />
-  <script defer src="{{url_for('static', filename='js/main.js')}}"></script>
+  <script defer src="{{url_for('static', filename='js/drag_and_drop.js')}}"></script>
 </head>
 
 <!-- Ignore Error Below, Required for Flask to Load Background Image Properly -->
-<body class="encryptContainer" style="background-image: linear-gradient(#150a33b6, #605ed4a1), url({{url_for('static', filename='images/Website_BG_Encryption.png')}})">
+
+<body class="encryptContainer">
 
   <header>
     <a href="{{url_for('home_page')}}"><img src="{{url_for('static', filename='images/FiCrypt_Logo.png')}}" class="filecrypt"></a>
@@ -32,7 +33,10 @@
 
     <div class="drop-zone">
       <span class="drop-zone__prompt">Drop file here or click to upload</span>
-      <input type="file" name="myFile" class="drop-zone__input">
+      <form class="submit-form" method="post" enctype="multipart/form-data" value="">
+        <input type="file" name="file" class="drop-zone__input" />
+      </form>
+
     </div>
 
 

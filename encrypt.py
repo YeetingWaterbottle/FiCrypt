@@ -1,9 +1,9 @@
 from tqdm import tqdm
 import time
 from math import sqrt, floor, ceil
-action = "de"
+action = "en"
 password = "Strong Pass234"
-file_name = "your_face_up_my_meat_jeremy.mp3"
+file_name = "input_file.png"
 
 
 def get_list_width(byte_list_length, divide):
