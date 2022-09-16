@@ -1,8 +1,8 @@
 from tqdm import tqdm
 import time
 from math import sqrt, floor, ceil
-action = "en"
-password = "Strong Pass234"
+action = "de"
+password = "Secure23x"
 file_name = "input_file.png"
 
 
