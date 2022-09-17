@@ -305,17 +305,21 @@ def encrypt_page():
 
 @app.post("/encrypt")
 def encrypt_file():
+    file = request.files["file"]
     if "file" not in request.files:
         return "Error: No File Part"
 
-    file = request.files["file"]
+    if file.filename == "":
+        return "Error: No File Selected"
+
     password = request.form["file_password"]
     if password == "":
         return "Error: Password Required"
-    action = request.form["action"]
 
-    if file.filename == "":
-        return "Error: No File Selected"
+    if len(password) > 16:
+        return "Error: Password Length Over Max Characters"
+
+    action = request.form["action"]
 
     # print(f'OUTPUT TYPE: {file_encryption("en", file, password)}', flush=True)
 

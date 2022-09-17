@@ -107,7 +107,7 @@ function overrideThumbnailOutput(file) {
 
     if (outputZone.querySelector(".output-zone__prompt")) {
         outputZone.querySelector(".output-zone__prompt").remove();
-        outputZone.querySelector(".output-zone__h3").innerText = "YOUR OUTPUTTED FILE SHOULD BE DOWNLOADING SOON...";
+        outputZone.querySelector(".output-zone__h3").innerText = "THE ENCRYPTED FILE SHOULD BE PROMPTED FOR DOWNLOAD SOON...";
     }
 }
 
@@ -120,7 +120,12 @@ function onClick(chosen) {
     if (files[0]) {
         overrideThumbnailOutput(files[0]);
         let submit_form = document.querySelector(".submit-form");
-        let password = prompt("Enter The File Password: ")
+        let password = prompt("Enter The File Password (16 Characters Max): ")
+
+        while(password.length > 16) {
+            password = prompt("Enter The File Password (16 Characters Max): ")
+        }
+
 
         if (chosen == true) {
             submit_form.children["file_password"].value = password;
