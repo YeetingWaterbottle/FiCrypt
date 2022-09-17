@@ -130,19 +130,17 @@ Text Underline Animation Below
 }
 
 .video-container {
-    position: absolute;
-    top: 0;
+    position: fixed;
+    right: 0;
     bottom: 0;
-    width: 130%;
-    height: 150%;
-    overflow: hidden;
+    min-width: 100%;
+    min-height: 100%;
     z-index: -1;
 }
 
 .video-container .indexVideo {
     /* Make video to at least 100% wide and tall */
     min-width: 100%;
-    min-height: 130%;
 
     /* Setting width & height to auto prevents the browser from stretching or squishing the video */
     width: auto;
@@ -345,6 +343,7 @@ excryptPage
     overflow: hidden;
     background-color: #cccccc;
     background-size: cover;
+    background-position: center center;
     position: relative;
 }
 
