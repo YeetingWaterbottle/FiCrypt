@@ -4,6 +4,7 @@ from flask import Flask, request, render_template, url_for, redirect, send_file
 # from markupsafe import escape
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # from tqdm import tqdm
 # import time
@@ -220,7 +221,7 @@ def save_bytes(byte_list, action, file_name=""):
 
     # print(f"Output File Name: {file_name}")
 
-    return result
+    return [result, file_name]
 
 
 def print_bytes(byte_list):
@@ -309,6 +310,8 @@ def encrypt_file():
 
     file = request.files["file"]
     password = request.form["file_password"]
+    if password == "":
+        return "Error: Password Required"
     action = request.form["action"]
 
     if file.filename == "":
@@ -317,14 +320,12 @@ def encrypt_file():
     # print(f'OUTPUT TYPE: {file_encryption("en", file, password)}', flush=True)
 
     if action == "en":
-        read_binary_file = io.BytesIO(file_encryption("en", file, password))
-
-        return send_file(read_binary_file, as_attachment=True, download_name="encrypted.enc")
+        binary_file = file_encryption("en", file, password)
+        return send_file(io.BytesIO(binary_file[0]), as_attachment=True, download_name=binary_file[1])
 
     if action == "de":
-        read_binary_file = io.BytesIO(file_encryption("de", file, password))
-
-        return send_file(read_binary_file, as_attachment=True, download_name="encrypted.done")
+        binary_file = file_encryption("de", file, password)
+        return send_file(io.BytesIO(binary_file[0]), as_attachment=True, download_name=binary_file[1])
 
     # return redirect(url_for("download_page"))
 

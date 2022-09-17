@@ -116,17 +116,20 @@ function onClick(chosen) {
     //chosen false when decrypt
 
     //files[0] is how you can access the file.
-    let submit_form = document.querySelector(".submit-form");
 
     if (files[0]) {
         overrideThumbnailOutput(files[0]);
+        let submit_form = document.querySelector(".submit-form");
+        let password = prompt("Enter The File Password: ")
 
         if (chosen == true) {
-            submit_form.children['file_action'].value = "en";
+            submit_form.children["file_password"].value = password;
+            submit_form.children["file_action"].value = "en";
             submit_form.submit();
             //encryption file and prompt download
         } else if (chosen == false) {
-            submit_form.children['file_action'].value = "de";
+            submit_form.children["file_password"].value = password;
+            submit_form.children["file_action"].value = "de";
             submit_form.submit();
             //decryption file and prompt download
         }

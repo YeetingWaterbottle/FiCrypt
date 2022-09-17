@@ -32,11 +32,11 @@
     </div>
 
     <div class="drop-zone">
-      <span class="drop-zone__prompt">Drop file here or click to upload</span>
+      <span class="drop-zone__prompt">Drop file here or click to upload<br><br>(Max File Size: 16MB)</span>
       <form class="submit-form" method="post" enctype="multipart/form-data" value="">
         <input type="file" name="file" class="drop-zone__input" />
         <input type="hidden" name="action" id="file_action" />
-        <input type="password" name="file_password" />
+        <input type="hidden" name="file_password" id="file_password" />
       </form>
 
     </div>
