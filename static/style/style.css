@@ -418,3 +418,19 @@ Transition between web pages
         transform: rotateX(0);
     }
 }
+
+::-webkit-scrollbar {
+    width: 0.5em;
+    background: transparent;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #150a33b6;
+
+}
+
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #26a8f3;
+}

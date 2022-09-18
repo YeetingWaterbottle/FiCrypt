@@ -307,19 +307,21 @@ def encrypt_page():
 def encrypt_file():
     file = request.files["file"]
     if "file" not in request.files:
-        return "Error: No File Part"
+        return "<h1>Error: No File Part</h1>"
 
     if file.filename == "":
-        return "Error: No File Selected"
+        return "<h1>Error: No File Selected</h1>"
 
     password = request.form["file_password"]
     if password == "":
-        return "Error: Password Required"
+        return "<h1>Error: Password Required</h1>"
 
     if len(password) > 16:
-        return "Error: Password Length Over Max Characters"
+        return "<h1>Error: Password Length Over Max Characters</h1>"
 
     action = request.form["action"]
+    if action == "de" and file.filename.split(".")[-1] != "enc":
+        return "<h1>Error: File Not Encrypted. File Extenshion Needs to Be \".enc\"</h1>"
 
     # print(f'OUTPUT TYPE: {file_encryption("en", file, password)}', flush=True)
 
