@@ -1,27 +1,21 @@
 # import os
 import io
-from flask import Flask, request, render_template, url_for, redirect, send_file
-# from markupsafe import escape
+from flask import Flask, request, render_template, send_file
+from math import sqrt, floor, ceil
+import numpy as np
+import base64
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
-# from tqdm import tqdm
-# import time
-from math import sqrt, floor, ceil
-
-action = "en"
-password = ""
-# password = "Super Secure!38"
-file_name = "input_file.png"
-
 
 def get_list_width(byte_list_length, divide):
-    if floor(sqrt(byte_list_length) / divide) % 2 == 0:
-        return floor(sqrt(byte_list_length) / divide)
+    radicand = sqrt(byte_list_length / divide)
+    if floor(radicand) % 2 == 0:
+        return floor(radicand)
 
-    elif ceil(sqrt(byte_list_length) / divide) % 2 == 0:
-        return ceil(sqrt(byte_list_length) / divide)
+    elif ceil(radicand) % 2 == 0:
+        return ceil(radicand)
 
     return -1
 
@@ -51,18 +45,11 @@ def set_array_width(byte_list, byte_list_length, list_width):
     return result
 
 
-def check_add_padding(
-    byte_list,
-    list_width,
-):
+def check_add_padding(byte_list, list_width):
     if len(byte_list[-1]) != list_width:
         byte_list[-1] += (list_width - len(byte_list[-1])) * ["00000000"]
 
     return byte_list
-
-
-def add_filename_data(str_bytes, file_name):
-    return f"{str_bytes}{'00000000' * 8}{''.join(str_to_byte(file_name, 'string'))}"
 
 
 def split_bytes(byte_list):
@@ -126,7 +113,6 @@ def encrypt_bytes(byte_list, password):
     password = split_bytes([password])[0]
 
     for byte in password:
-        # for byte in tqdm(password):
         if byte[0] == "1":
             byte_list = mirror_bytes(byte_list)
             # print("Mirror Bytes")
@@ -153,7 +139,6 @@ def decrypt_bytes(byte_list, password):
     password = split_bytes([password])[0]
 
     for byte in password[::-1]:
-        # for byte in tqdm(password[::-1]):
         if byte[3] == "1":
             if byte[2] == "1":
                 byte_list = reverse_bytes(byte_list, "verticle",
@@ -216,17 +201,7 @@ def save_bytes(byte_list, action, file_name=""):
         for byte in foo[:-counter]:
             result.append(int(byte, 2))
 
-    # with open(file_name, "wb") as file:
-    #     file.write(result)
-
-    # print(f"Output File Name: {file_name}")
-
     return [result, file_name]
-
-
-def print_bytes(byte_list):
-    for row in byte_list:
-        print(row)
 
 
 def file_encryption(action, file_input, password):
@@ -253,14 +228,8 @@ def file_encryption(action, file_input, password):
 
     result = check_add_padding(result, width_segment)
 
-    # print("Original Input Binary")
-    # print_bytes(result)
-
     result = split_bytes(result)
 
-    # password = input("Input Password: ")
-    # start_time = time.time()
-    # print("Password Set to: " + password)
 
     if action == "en":
         result = encrypt_bytes(result, password)
@@ -271,16 +240,12 @@ def file_encryption(action, file_input, password):
     # print("Combined Back to 8-bit Bytes")
     result = combine_bytes(result, 2)
 
-    # print_bytes(result)
-
     if action == "en":
         return save_bytes(result, action, "encrypted.enc")
     if action == "de":
         return save_bytes(result, action)
 
     # print("Encrypted Saved!")
-
-    # print(f"--- Program Ran In {time.time() - start_time} Seconds ---")
 
 
 @app.route("/")
@@ -323,8 +288,6 @@ def encrypt_file():
     if action == "de" and file.filename.split(".")[-1] != "enc":
         return "<h1>Error: File Not Encrypted. File Extenshion Needs to Be \".enc\"</h1>"
 
-    # print(f'OUTPUT TYPE: {file_encryption("en", file, password)}', flush=True)
-
     if action == "en":
         binary_file = file_encryption("en", file, password)
         return send_file(io.BytesIO(binary_file[0]), as_attachment=True, download_name=binary_file[1])
@@ -332,11 +295,3 @@ def encrypt_file():
     if action == "de":
         binary_file = file_encryption("de", file, password)
         return send_file(io.BytesIO(binary_file[0]), as_attachment=True, download_name=binary_file[1])
-
-    # return redirect(url_for("download_page"))
-
-
-# @app.route("/download")
-# def download_page(file):
-#     file_binary = file.read()
-#     return render_template("download.html")

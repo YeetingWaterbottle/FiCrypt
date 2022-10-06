@@ -1,4 +1,6 @@
 /__pycache__
 
+/venv
+
 encrypted.enc
 test.py
