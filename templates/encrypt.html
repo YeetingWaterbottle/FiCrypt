@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>FiCrypt: File Safety made Easy</title>
-  <link href="{{url_for('static', filename='style/style.css')}}" rel="stylesheet" type="text/css" />
-  <link rel="icon" href="{{url_for('static', filename='images/FiCrypt_Logo.png')}}">
-  <script defer src="{{url_for('static', filename='js/drag_and_drop.js')}}"></script>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>FiCrypt: File Safety made Easy</title>
+    <link href="{{url_for('static', filename='style/style.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="{{url_for('static', filename='images/FiCrypt_Logo.png')}}">
+    <script defer src="{{url_for('static', filename='js/drag_and_drop.js')}}"></script>
+  </head>
 
-<!-- Ignore Error Below, Required for Flask to Load Background Image Properly -->
-
-<body class="encryptContainer">
+<body class = "encryptContainer">
 
   <header>
     <a href="{{url_for('home_page')}}"><img src="{{url_for('static', filename='images/FiCrypt_Logo.png')}}" class="filecrypt"></a>
@@ -23,34 +21,30 @@
     </ul>
   </header>
 
-  <div class="funcContainer">
-    <div class="eText">
+  <div class = "funcContainer">
+    <div class = "eText">
       <h3>You can encrypt & decrypt files here.</h2>
     </div>
-    <div class="eButtons">
-      <button type="button" class="EncryptB">Encrypt+</button>
-      <button type="button" class="DecryptB">Decrypt-</button>
+    <div class = "eButtons">
+      <button type="button" class ="EncryptB">Encrypt+</button>
+      <button type="button" class ="DecryptB">Decrypt-</button>
     </div>
+
+    <svg>
+      <circle class="bg" cx="57" cy="57" r="52" />
+      <circle class="meter-1" cx="57" cy="57" r="52" />
+    </svg>
 
     <div class="drop-zone">
-      <span class="drop-zone__prompt">Drop file here or click to upload<br><br>(Max File Size: 16MB)</span>
-      <form class="submit-form" method="post" enctype="multipart/form-data" value="">
-        <input type="file" name="file" class="drop-zone__input" />
-        <input type="hidden" name="action" id="file_action" />
-        <input type="hidden" name="file_password" id="file_password" />
-      </form>
-
+      <span class="drop-zone__prompt">Drop file here or click to upload</span>
+      <input type="file" name="myFile" class="drop-zone__input">
     </div>
-
-
+    
     <div class="output_zone">
       <span class="output-zone__prompt">OUTPUT</span>
-      <h3 class="output-zone__h3">Keep in mind that the files will not decrypt if you do not give an encrypted file that came from this site.</h3>
+      <h3 class = "output-zone__h3">Keep in mind that the files will not decrypt if you do not give an encrypted file that came from this site.</h3>
     </div>
-
   </div>
-
-  <div class="popup-background"></div>
 
 </body>
 

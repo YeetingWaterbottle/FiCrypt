@@ -95,9 +95,9 @@ header ul li a:hover {
 }
 
 .indexImage .filecrypt {
-    width: 200px;
+    width: 250px;
     padding: 30px 30px 30px 30px;
-    margin-left: 10%;
+    margin-left: 0.1%;
     margin-right: 10%;
 }
 
@@ -152,7 +152,7 @@ Text Underline Animation Below
     left: 50%;
     transform: translate(-50%, -50%);
 
-    filter: brightness(35%);
+    filter: brightness(50%);
 
     z-index: -2;
 }
@@ -239,7 +239,7 @@ excryptPage
 */
 
 .encryptContainer {
-    background-image: linear-gradient(#150a33b6, #605ed4a1), url("/static/images/Website_BG_Encryption.png");
+    background-image: url("/static/images/Encrypt_Page_Background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;
@@ -272,7 +272,7 @@ excryptPage
     background-color: #5372f8;
     color: rgb(218, 255, 241);
     padding: 10px 10px 10px 10px;
-    margin: 25px 25px 25px 25px;
+    margin: 25px 25px 0px 25px;
     z-index: 3;
     cursor: pointer;
 }
@@ -293,7 +293,7 @@ excryptPage
     border: 4px dashed #a166ff;
     border-radius: 10px;
 
-    margin-top: 5%;
+    margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -313,7 +313,7 @@ excryptPage
     border: 4px dashed #a8cfff;
     border-radius: 10px;
 
-    margin-top: 5%;
+    margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 15%;
@@ -369,6 +369,45 @@ excryptPage
     background: rgba(0, 0, 0, 0.5);
     z-index: 5000;
     visibility: hidden;
+}
+  
+svg {
+    width: 114px;
+    height: 114px;
+    margin: auto;
+    display:block;
+    margin-top:1%;
+    margin-bottom: 0%;
+}
+
+.bg {
+    fill: none;
+    stroke-width: 10px;
+    stroke: #1A2C34;
+}
+
+[class^="meter-"] {
+    fill: none;
+    stroke-width: 10px;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.meter-1 {
+    stroke-dasharray: 360;
+    stroke-dashoffset: 0;
+    stroke: aqua;
+    animation: progress-1 1s ease-out;
+}
+
+@keyframes progress-1 {
+    from {
+        stroke-dashoffset: 360;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 
 /*

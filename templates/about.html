@@ -9,14 +9,14 @@
   <link rel="icon" href="{{url_for('static', filename='images/FiCrypt_Logo.png')}}">
 </head>
 
-<body class="container">
+<body class = "container">
 
-  <div class="video-container">
-    <video autoplay loop muted plays-inline class="indexVideo">
-      <source src="{{url_for('static', filename='videos/About_Video.mp4')}}" type="video/mp4">
+  <div class = "video-container">
+    <video autoplay loop muted plays-inline class = "indexVideo">
+      <source src="{{url_for('static', filename='videos/Main_Page_Video.mp4')}}" type=""video/mp4">
     </video>
   </div>
-
+  
   <header>
     <a href="{{url_for('home_page')}}"><img src="{{url_for('static', filename='images/FiCrypt_Logo.png')}}" class="filecrypt"></a>
     <ul>
@@ -25,13 +25,13 @@
       <li><a href="{{url_for('inspirations_page')}}" class="hover_anim">Inspirations</a></li>
     </ul>
   </header>
-
-  <div class="aboutClass">
+  
+  <div class = "aboutClass">
     <h2>ABOUT THE APP</h2>
     <h3>
       <br>
       <br>
-      This app was started 3 days prior to the igniteCS Expo (September 11th Registration), by Brian Wang & Devin Wang.<br>
+      This app was started on September 11th of 2022 by Brian Wang & Devin Wang.<br>
       Part of the reason why we built this is for users to easily encrypt files for employees within large companies.<br>
       With a new home-made encryption method, it will be difficult for others to "hack" or decrypt these files without a key.<br>
       <br>
@@ -39,19 +39,20 @@
       <br>
     </h3>
 
-    <h3>A download link will be given, and users can download the encrypted file.<br>
-      They can then decrypt this file back here with a key.<br>
+    <h3>A user can encrypt their files with our home-made algorithm within this site using a password.<br>
+      Then, they can decrypt the file with the same password.<br>
       <br>
       <br>
       <br>
       <br>
     </h3>
 
-    <img src="{{url_for('static', filename='images/igniteCS_Logo.png')}}" class="cslogo"></img>
+    <img src ="{{url_for('static', filename='images/Congressional_App_Logo.png')}}" class="cslogo"></img>
 
+    
 
   </div>
-
+  
 </body>
 
 </html>
