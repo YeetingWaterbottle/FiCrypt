@@ -121,12 +121,15 @@ function onClick(chosen) {
     if (files[0]) {
         overrideThumbnailOutput(files[0]);
         let submit_form = document.querySelector(".submit-form");
-        let password = prompt("Enter The File Password (16 Characters Max): ")
+        let password = prompt("Enter The File Password: ")
 
-        while(password.length > 16) {
-            password = prompt("Enter The File Password (16 Characters Max!): ")
-        }
+        while(password.length <= 0) {
+            password = prompt("Enter The File Password: ")
+        }   
 
+        // hash the password with sha256
+        password = CryptoJS.SHA256(password).toString()
+        
 
         if (chosen == true) {
             submit_form.children["file_password"].value = password;

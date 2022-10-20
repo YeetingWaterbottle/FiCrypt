@@ -302,7 +302,7 @@ def encrypt_file():
     if password == "":
         return "<h1>Error: Password Required</h1>"
 
-    if len(password) > 16:
+    if len(password) > 64:
         return "<h1>Error: Password Length Over Max Characters</h1>"
 
     action = request.form["action"]

@@ -235,7 +235,7 @@ Inspirations CSS
 }
 
 /*
-excryptPage
+encryptPage
 */
 
 .encryptContainer {
@@ -380,13 +380,19 @@ svg {
     margin-bottom: 0%;
 }
 
+
 .bg {
+    stroke-dasharray: 360;
+    stroke-dashoffset: 0;
     fill: none;
     stroke-width: 10px;
     stroke: #1A2C34;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    animation: progress-1 1s ease-out;
 }
 
-[class^="meter-"] {
+[class^="meter-1"] {
     fill: none;
     stroke-width: 10px;
     stroke-linecap: round;
@@ -396,9 +402,8 @@ svg {
 
 .meter-1 {
     stroke-dasharray: 360;
-    stroke-dashoffset: 0;
+    stroke-dashoffset: 360;
     stroke: aqua;
-    animation: progress-1 1s ease-out;
 }
 
 @keyframes progress-1 {
