@@ -277,6 +277,10 @@ def home_page():
 def about_page():
     return render_template("about.html")
 
+@app.route("/error")
+def error_page():
+    return render_template("error.html")
+
 
 @app.route("/inspirations")
 def inspirations_page():

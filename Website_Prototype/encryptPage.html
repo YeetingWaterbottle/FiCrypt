@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>FiCrypt: File Safety made Easy</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class = "encryptContainer">
+
+  <header>
+    <a href="index.html"><img src="images/FiCrypt Logo.png" alt="" class="filecrypt"></a>
+    <ul>
+      <li><a href="index.html" class = "hover_anim">Main</a></li>
+      <li><a href="about.html" class = "hover_anim">About</a></li>
+      <li><a href="inspirations.html" class = "hover_anim">Inspirations</a></li>
+    </ul>
+  </header>
+  
+  <div class = "funcContainer">
+    <div class = "eText">
+      <h3>You can encrypt & decrypt files here.</h2>
+    </div>
+    <div class = "eButtons">
+      <button type="button" class ="EncryptB">Encrypt+</button>
+      <button type="button" class ="DecryptB">Decrypt-</button>
+    </div>
+
+    <div class="drop-zone">
+      <span class="drop-zone__prompt">Drop file here or click to upload</span>
+      <input type="file" name="myFile" class="drop-zone__input">
+    </div>
+    
+    <div class="output_zone">
+      <span class="output-zone__prompt">OUTPUT</span>
+      <h3 class = "output-zone__h3">Keep in mind that the files will not decrypt if you do not give an encrypted file that came from this site.</h3>
+    </div>
+
+    <script src="./main.js"></script>
+  </div>
+
+  <div class="popup-background"></div>
+
+</body>
+
+</html>

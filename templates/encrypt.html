@@ -12,6 +12,12 @@
 </head>
 
 <body class="encryptContainer">
+  <div class="video-container">
+    <video autoplay loop muted plays-inline class="indexVideo">
+      <source src="{{url_for('static', filename='videos/MilkWay_Video.mp4')}}" type="video/mp4" 、>
+    </video>
+  </div>
+
 
   <header>
     <a href="{{url_for('home_page')}}"><img src="{{url_for('static', filename='images/FiCrypt_Logo.png')}}" class="filecrypt"></a>
@@ -27,8 +33,15 @@
       <h3>You can encrypt & decrypt files here.</h2>
     </div>
     <div class="eButtons">
-      <button type="button" class="EncryptB">Encrypt+</button>
-      <button type="button" class="DecryptB">Decrypt-</button>
+      <button type="button" class="EncryptB">
+        <img class="btnImg" src="{{url_for('static', filename='images/Encrypt_File_Icon.png')}}" alt="" />
+        ㅤㅤEncrypt
+      </button>
+
+      <button type="button" class="DecryptB">
+        <img class="btnImg" src="{{url_for('static', filename='images/Decrypt_File_Icon.png')}}" alt="" />
+        ㅤㅤDecrypt
+      </button>
     </div>
 
     <svg>
@@ -37,7 +50,7 @@
     </svg>
 
     <div class="drop-zone">
-      <span class="drop-zone__prompt">Drop file here or click to upload<br><br>(Max File Size: 16MB)</span>
+      <span class="drop-zone__prompt">Drop file here or click to upload<br><br>(Max File Size: 25MB)</span>
       <form class="submit-form" method="post" enctype="multipart/form-data" value="">
         <input type="file" name="file" class="drop-zone__input" />
         <input type="hidden" name="action" id="file_action" />
