@@ -28,7 +28,10 @@
 
   <div class="indexClass">
     <div class="indexText">
-      <h2>Oops, there was an error!<br>Please go back to a previous page.</h2>
+      <h2>Oops, there was an error!<br>{{error}}</h2>
+      <div class="eButtons">
+        <button onclick="history.back()">Go Back</button>
+      </div>
     </div>
   </div>
 

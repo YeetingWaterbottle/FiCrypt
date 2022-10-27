@@ -107,6 +107,7 @@ function overrideThumbnailOutput(file) {
 
     if (outputZone.querySelector(".output-zone__prompt")) {
         outputZone.querySelector(".output-zone__prompt").remove();
+        outputZone.querySelector(".output-zone__h3").innerText = "THE FILE IS BEING ENCRYPTED, THIS MIGHT TAKE A FEW SECONDS. FILE SIZE WILL AFFECT THE TIME REQUIRED FOR THIS PROCESS...";
         // outputZone.querySelector(".output-zone__h3").innerText = "THE ENCRYPTED FILE SHOULD BE PROMPTED FOR DOWNLOAD SOON...";
     }
 }
@@ -141,6 +142,11 @@ function onClick(chosen) {
             submit_form.submit();
             //decryption file and prompt download
         }
+
+        document.querySelector(".meter-1").style.strokeDashoffset = 240;
+        document.querySelector(".bg").style.display = "block";
+
+        
     } else {
         alert("Please upload a file first!");
     }

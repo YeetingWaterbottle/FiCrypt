@@ -9,7 +9,7 @@ import itertools
 import re
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 
+app.config['MAX_CONTENT_LENGTH'] = 25 * 1024 * 1024 
 
 
 def get_list_width(byte_list_length, divide):
@@ -246,26 +246,42 @@ def file_encryption(action, file_input, password):
     result = check_add_padding(result, width_segment)
     print("done add padding")
 
-    # print("split in half")
-    # result = split_bytes(result, width_segment)
-    # print("done split in half")
+    print("split in half")
+    result = split_bytes(result, width_segment)
+    print("done split in half")
+
 
     if action == "en":
         result = encrypt_bytes(result, password)
 
     if action == "de":
+        result = np.array(result)
         result = decrypt_bytes(result, password)
 
-    # print("combind back to full byte")
-    # result = combine_bytes(result, width_segment)
-    # print("done combining")
+    print("combind back to full byte")
+    result = combine_bytes(result, width_segment)
+    print("done combining")
 
     if action == "en":
         return save_bytes(result, action, "encrypted.enc")
     if action == "de":
         return save_bytes(result, action)
 
-    # print("Encrypted Saved!")
+    print("Encrypted Saved!")
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("error.html", error="Page Not Found")
+
+
+@app.errorhandler(413)
+def file_too_big(e):
+    return render_template("error.html", error="File Uploaded Is Too Big")
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("error.html", error="Internal Server Error")
 
 
 @app.route("/")
@@ -276,10 +292,6 @@ def home_page():
 @app.route("/about")
 def about_page():
     return render_template("about.html")
-
-@app.route("/error")
-def error_page():
-    return render_template("error.html")
 
 
 @app.route("/inspirations")
@@ -297,21 +309,22 @@ def encrypt_file():
     starting_time = time.perf_counter()
     file = request.files["file"]
     if "file" not in request.files:
-        return "<h1>Error: No File Part</h1>"
+        return render_template("error.html", error="No File Part")
 
     if file.filename == "":
-        return "<h1>Error: No File Selected</h1>"
+        return render_template("error.html", error="No File Selected")
 
     password = request.form["file_password"]
     if password == "":
-        return "<h1>Error: Password Required</h1>"
+        return render_template("error.html", error="Password Required")
 
     if len(password) > 64:
-        return "<h1>Error: Password Length Over Max Characters</h1>"
+        return render_template("error.html", error="Password Length Over Max Characters")
+
 
     action = request.form["action"]
     if action == "de" and file.filename.split(".")[-1] != "enc":
-        return "<h1>Error: File Not Encrypted. File Extenshion Needs to Be \".enc\"</h1>"
+        return render_template("error.html", error="File Not Encrypted. File Extenshion Needs to Be \".enc\" to Decrypt")
 
     if action == "en":
         binary_file = file_encryption("en", file, password)
@@ -322,3 +335,4 @@ def encrypt_file():
         binary_file = file_encryption("de", file, password)
         app.logger.info(f"Decrypting Process Took {time.perf_counter() - starting_time} Seconds.")
         return send_file(io.BytesIO(binary_file[0]), as_attachment=True, download_name=binary_file[1])
+

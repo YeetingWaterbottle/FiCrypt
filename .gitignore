@@ -2,5 +2,7 @@
 
 /venv
 
+/sample_files
+
 encrypted.enc
 test.py
