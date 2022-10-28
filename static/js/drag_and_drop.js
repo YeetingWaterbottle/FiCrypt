@@ -112,6 +112,21 @@ function overrideThumbnailOutput(file) {
     }
 }
 
+function update_progress() {
+    fetch("/progress")
+        .then((response) => response.json())
+        .then((progress) => {
+            document.querySelector(".meter-1").style.strokeDashoffset = 240 - progress[0] * 2.4; // 240 will make the progress circle empty, as the value decreases, the circle gets filled little by little.
+            outputZone.querySelector(".output-zone__h3").innerText = progress[1];
+            
+            if (progress[0] == 100) {
+                return "finished";
+            }
+            setTimeout(update_progress, 1000);
+        });
+    // .catch((error) => console.log(error));
+}
+
 function onClick(chosen) {
     //chosen true when encrypt
     //chosen false when decrypt
@@ -121,15 +136,14 @@ function onClick(chosen) {
     if (files[0]) {
         overrideThumbnailOutput(files[0]);
         let submit_form = document.querySelector(".submit-form");
-        let password = prompt("Enter The File Password: ")
+        let password = prompt("Enter The File Password: ");
 
-        while(password.length <= 0) {
-            password = prompt("Enter The File Password: ")
-        }   
+        while (password.length <= 0) {
+            password = prompt("Enter The File Password: ");
+        }
 
         // hash the password with sha256
-        password = CryptoJS.SHA256(password).toString()
-        
+        password = CryptoJS.SHA256(password).toString();
 
         if (chosen == true) {
             submit_form.children["file_password"].value = password;
@@ -146,7 +160,7 @@ function onClick(chosen) {
         document.querySelector(".meter-1").style.strokeDashoffset = 240;
         document.querySelector(".bg").style.display = "block";
 
-        
+        update_progress();
     } else {
         alert("Please upload a file first!");
     }

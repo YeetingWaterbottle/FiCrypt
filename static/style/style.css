@@ -281,6 +281,21 @@ encryptPage
     text-size-adjust: 10px;
 }
 
+.bButtons button {
+    position: relative;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    letter-spacing: 5px;
+    border-radius: 2px;
+    border-color: #2a105500;
+    background-color: #008cff;
+    color: rgb(218, 255, 241);
+    padding: 10px 10px 10px 10px;
+    margin: 25px 25px 25px 25px;
+    z-index: 3;
+    cursor: pointer;
+}
+
 .eButtons button .btnImg {
     position: absolute;
     left: 6px;
@@ -401,6 +416,7 @@ svg {
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
     animation: progress-1 1s ease-out;
+    display: none;
 }
 
 [class^="meter-1"] {
