@@ -7,6 +7,7 @@ import numpy as np
 from base64 import b64encode, b64decode
 import itertools
 import re
+import json
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1024 * 1024 
@@ -217,13 +218,28 @@ def save_bytes(byte_list, action, file_name=""):
     return [result, file_name]
 
 
+@app.route("/progress")
+def progress_status():
+    try:
+        if progress != None:
+            return json.dumps(progress)
+
+    except NameError:
+        return json.dumps([0, "Initializing"])
+
+
 def file_encryption(action, file_input, password):
+    global progress
+    progress = [0, "Initializing"]
+
     if action == "en":
         file_name = file_input.filename
 
     elif action == "de":
         file_name = "encrypted.enc"
 
+    progress = [5, "Getting File Name"]
+    
     input_str = file_input.read()
 
     print("to byte")
@@ -234,6 +250,9 @@ def file_encryption(action, file_input, password):
         input_bin = str_to_byte(input_str, "binary")
     print("done to byte")
 
+    progress = [15, "Converted to Bytes"]
+
+    
     input_len = len(input_bin)
     result = []
 
@@ -242,29 +261,46 @@ def file_encryption(action, file_input, password):
     result = set_array_width(input_bin, input_len, width_segment)
     print("done to 2d")
 
+    progress = [35, "Bytes Shaped to 2D Array"]
+    
     print("add padding")
     result = check_add_padding(result, width_segment)
     print("done add padding")
+
+    progress = [40, "Padding Added to 2D Array"]
 
     print("split in half")
     result = split_bytes(result, width_segment)
     print("done split in half")
 
+    progress = [45, "2D Array of Bytes Splitted in Halves"]
+    
 
     if action == "en":
         result = encrypt_bytes(result, password)
+        progress = [80, "Bytes Encrypted"]
 
     if action == "de":
         result = np.array(result)
         result = decrypt_bytes(result, password)
+        progress = [80, "Bytes Decrypted"]
 
+    
     print("combind back to full byte")
     result = combine_bytes(result, width_segment)
     print("done combining")
 
+    progress = [90, "Splitted Bytes Combined to Full Size Bytes"]
+    
     if action == "en":
+        progress = [100, "Encrypted File Prompted to Download"]
+        time.sleep(2)
+        progress = [0, "Initializing"]
         return save_bytes(result, action, "encrypted.enc")
     if action == "de":
+        progress = [100, "Decrypted File Prompted to Download"]
+        time.sleep(2)
+        progress = [0, "Initializing"]
         return save_bytes(result, action)
 
     print("Encrypted Saved!")
@@ -335,4 +371,5 @@ def encrypt_file():
         binary_file = file_encryption("de", file, password)
         app.logger.info(f"Decrypting Process Took {time.perf_counter() - starting_time} Seconds.")
         return send_file(io.BytesIO(binary_file[0]), as_attachment=True, download_name=binary_file[1])
+
 
