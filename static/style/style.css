@@ -240,7 +240,6 @@ encryptPage
 */
 
 .encryptContainer {
-    background-image: url("/static/images/Encrypt_Page_Background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;

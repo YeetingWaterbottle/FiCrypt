@@ -192,18 +192,24 @@ def extract_file_info(byte_list):
         name_length += chr(int(i, 2))
 
     # decode file name in base64
-    file_name = convert_base64(file_name, "de")
-    name_length = int(name_length)
+    try:
+        file_name = convert_base64(file_name, "de")
+        name_length = int(name_length)
+
+    except ValueError:
+        return ["", "", False]
+    
 
     
     return [byte_list[:-counter], file_name, name_length == len(file_name)]
 
 def save_bytes(byte_list, action, file_name=""):
-
     result = bytearray()
 
     if action == "de":
         stripped_byte_list = extract_file_info(byte_list)
+        if not stripped_byte_list[-1]:
+            return ["", ""]
         file_name = stripped_byte_list[1]
 
     if action == "en":
@@ -370,6 +376,6 @@ def encrypt_file():
     if action == "de":
         binary_file = file_encryption("de", file, password)
         app.logger.info(f"Decrypting Process Took {time.perf_counter() - starting_time} Seconds.")
+        if binary_file == ["", ""]:
+            return render_template("error.html", error="Password Inputted for The Encrypted File Is Not Corrent, Please Try Again.")
         return send_file(io.BytesIO(binary_file[0]), as_attachment=True, download_name=binary_file[1])
-
-
